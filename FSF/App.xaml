@@ -1,0 +1,36 @@
+﻿<Application x:Class="FSF.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:local="clr-namespace:Classes"
+             xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone">
+
+    <Application.Resources>
+        <local:LocalizedStrings x:Key="LocalizedStrings"/>
+        <local:ImageConverter x:Key="ImageConverter" />
+
+        <Style x:Key="Btn_NoBorder" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource PhoneAccentBrush}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <ContentControl Content="{TemplateBinding Content}"
+                                            Foreground="{TemplateBinding Foreground}" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Application.Resources>
+
+    <Application.ApplicationLifetimeObjects>
+        <shell:PhoneApplicationService  Launching="Application_Launching" 
+                                        Closing="Application_Closing" 
+                                        Activated="Application_Activated" 
+                                        Deactivated="Application_Deactivated"/>
+    </Application.ApplicationLifetimeObjects>
+
+</Application>

@@ -1,0 +1,60 @@
+﻿<phone:PhoneApplicationPage x:Class="FSF.Pages.Search"
+                            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                            xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+                            xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+                            SupportedOrientations="Portrait"
+                            Orientation="Portrait"
+                            shell:SystemTray.IsVisible="True"
+                            shell:SystemTray.Opacity="0"
+                            shell:SystemTray.ForegroundColor="#FFFFFE">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="120"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Rectangle Fill="#262626"/>
+        <Rectangle Fill="#363636" 
+                   Grid.Row="1"/>
+
+        <ProgressBar x:Name="prog_searching"
+                     Foreground="#FFFFC700"
+                     Grid.Row="1"
+                     Visibility="Collapsed"
+                     IsIndeterminate="True"
+                     VerticalAlignment="Top"/>
+
+        <TextBox Text="FILMS"
+                 x:Name="Txt_Search"
+                 Margin="10,30,10,0"
+                 VerticalAlignment="Top"
+                 Foreground="#262626"
+                 InputScope="Maps"
+                 KeyDown="Txt_Search_KeyDown"
+                 FontFamily="\Resources\Oswald-Light.ttf#Oswald"/>
+
+        <!--<Grid Height="214"
+                                  Margin="0,20,0,0">
+                    <Image Source="/Images/SampleImages/foreplay.jpg"/>
+                    <Border VerticalAlignment="Bottom"
+                                        Background="#BF000000">
+                        <TextBlock Text="FOREPLAY."
+                                               FontSize="25"
+                                               TextWrapping="Wrap"                
+                                               Margin="5"
+                                               Foreground="#FFFFC700"
+                                               FontFamily="\Resources\Oswald-Bold.ttf#Oswald"/>
+                    </Border>
+                </Grid>-->
+        <Rectangle Height="20"
+                   Grid.Row="1"
+                   Fill="#363636"
+                   VerticalAlignment="Top">
+            <Rectangle.OpacityMask>
+                <ImageBrush Stretch="Fill" ImageSource="/Images/Gradiant.png"/>
+            </Rectangle.OpacityMask>
+        </Rectangle>
+    </Grid>
+
+</phone:PhoneApplicationPage>

@@ -1,0 +1,351 @@
+﻿<phone:PhoneApplicationPage x:Class="FSF.Pages.MainPage"
+							xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+							xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+							xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+							xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+							xmlns:telerikPrimitives="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Primitives"
+							xmlns:telerikCore="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Core"
+							telerikCore:InteractionEffectManager.IsInteractionEnabled="True"
+							SupportedOrientations="Portrait"
+							Orientation="Portrait"
+							shell:SystemTray.IsVisible="True"
+							shell:SystemTray.Opacity="0"
+							shell:SystemTray.ForegroundColor="#FFFFFE">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="175"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Rectangle Fill="#262626"/>
+        <Rectangle Fill="#363636" 
+				   Grid.Row="1"/>
+
+        <Image Height="95"
+			   VerticalAlignment="Top"
+			   HorizontalAlignment="Left"
+			   Margin="20,45,0,0"
+			   Source="/Images/Logo.png"/>
+
+        <ProgressBar x:Name="prog_feeds"
+					 Visibility="Collapsed"
+					 Foreground="#FFFFC700"
+					 IsIndeterminate="True"
+					 VerticalAlignment="Top"/>
+
+        <ProgressBar x:Name="prog_video"
+					 Foreground="#FFFFC700"
+					 Visibility="Collapsed"
+					 IsIndeterminate="True"
+					 VerticalAlignment="Bottom"/>
+
+        <phone:Panorama Grid.RowSpan="2"
+						Margin="0,190,0,0">
+
+            <phone:PanoramaItem>
+                <phone:PanoramaItem.Header>
+                    <TextBlock Text="LATEST"
+							   FontSize="50"
+							   Foreground="White"
+							   FontFamily="\Resources\Oswald-Light.ttf#Oswald"/>
+                </phone:PanoramaItem.Header>
+                <Grid Margin="13,-20,27,0">
+                    <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                        <Grid Margin="0,20,0,0"
+                              x:Name="grd_latest">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="214"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Button Style="{StaticResource Btn_NoBorder}"
+									Click="PlayVideo"
+                                    x:Name="btn_latest">
+                                <Border Height="214"
+										Width="380">
+                                    <Image x:Name="img_latest"
+										   VerticalAlignment="Center"
+										   HorizontalAlignment="Center"
+										   Height="300"/>
+                                </Border>
+                            </Button>
+                            <TextBlock x:Name="txt_LatestName"
+									   Grid.Row="1"
+									   TextWrapping="Wrap"
+									   FontSize="30"
+									   LineHeight="40"
+									   LineStackingStrategy="BlockLineHeight"
+									   Foreground="#FFFFC700"
+									   Margin="0,15,0,0"
+									   FontFamily="\Resources\Oswald-Bold.ttf#Oswald"/>
+                            <TextBlock x:Name="txt_LatestDes"
+									   Grid.Row="2"
+									   TextWrapping="Wrap"
+									   FontSize="22"
+									   Foreground="White"
+									   Margin="0,15,0,20"
+									   FontFamily="\Resources\Oswald-Regular.ttf#Oswald"/>
+                        </Grid>
+                    </ScrollViewer>
+                    <Rectangle Height="20"
+							   Fill="#363636"
+							   VerticalAlignment="Top">
+                        <Rectangle.OpacityMask>
+                            <ImageBrush Stretch="Fill" ImageSource="/Images/Gradiant.png"/>
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </Grid>
+            </phone:PanoramaItem>
+
+            <phone:PanoramaItem Orientation="Horizontal">
+                <phone:PanoramaItem.Header>
+                    <Button Style="{StaticResource Btn_NoBorder}"
+							Width="135"
+							Height="75"
+							Click="AllFilmsClick">
+                        <Grid Height="75"
+							  Width="135">
+                            <TextBlock Text="FILMS"
+									   FontSize="50"
+									   Foreground="White"
+									   FontFamily="\Resources\Oswald-Light.ttf#Oswald"/>
+                            <TextBlock Text="›" 
+									   LineStackingStrategy="BlockLineHeight"
+									   LineHeight="78"
+									   HorizontalAlignment="Right"
+									   Foreground="White"
+									   FontFamily="\Resources\Oswald-Light.ttf#Oswald"
+									   FontSize="70" />
+                        </Grid>
+                    </Button>
+                </phone:PanoramaItem.Header>
+                <Grid Margin="0,-20,0,0">
+                    <ListBox Margin="13,20,30,0"
+                             x:Name="lst_films">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <telerikPrimitives:RadWrapPanel Orientation="Vertical" 
+																Height="395"
+																Width="752" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Button Tag="{Binding ID}"
+										Click="PlayVideo"
+										Height="173"
+										Width="173"
+										Margin="0,0,20,20"
+										Style="{StaticResource Btn_NoBorder}">
+                                    <Grid>
+                                        <Border Height="173"
+												Width="173"
+												BorderThickness="0">
+                                            <Image Source="{Binding ScreenshotUrl, Converter={StaticResource ImageConverter}}" 
+												   Height="300"
+												   VerticalAlignment="Center"
+												   HorizontalAlignment="Center"
+												   Stretch="UniformToFill"/>
+                                        </Border>
+                                        <Border VerticalAlignment="Bottom"
+												Background="#BF000000"
+												Margin="-1">
+                                            <TextBlock Text="{Binding VideoName}"
+													   FontSize="22"
+													   TextWrapping="Wrap"
+													   Margin="5"
+													   Foreground="#FFFFC700"
+													   FontFamily="\Resources\Oswald-Bold.ttf#Oswald"/>
+                                        </Border>
+                                    </Grid>
+                                </Button>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </phone:PanoramaItem>
+
+            <phone:PanoramaItem>
+                <phone:PanoramaItem.Header>
+                    <Button Style="{StaticResource Btn_NoBorder}"
+							Width="205"
+							Height="75"
+							Click="AllSketchesClick">
+                        <Grid Height="75"
+							  Width="205">
+                            <TextBlock Text="SKETCHES"
+									   FontSize="50"
+									   Foreground="White"
+									   FontFamily="\Resources\Oswald-Light.ttf#Oswald"/>
+                            <TextBlock Text="›" 
+									   LineStackingStrategy="BlockLineHeight"
+									   LineHeight="78"
+									   HorizontalAlignment="Right"
+									   Foreground="White"
+									   FontFamily="\Resources\Oswald-Light.ttf#Oswald"
+									   FontSize="70" />
+                        </Grid>
+                    </Button>
+                </phone:PanoramaItem.Header>
+                <Grid>
+                    <ListBox Width="380"
+							 x:Name="lst_sketches"
+							 HorizontalAlignment="Left"
+							 Margin="13,-20,0,0">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Button Height="214"
+										Width="380"
+										Tag="{Binding ID}"
+										Click="PlayVideo"
+										Style="{StaticResource Btn_NoBorder}"
+										Margin="0,20,0,0">
+                                    <Grid>
+                                        <Border Height="214"
+												Width="380">
+                                            <Image Source="{Binding ScreenshotUrl, Converter={StaticResource ImageConverter}}"
+												   Height="300"
+												   VerticalAlignment="Center"/>
+                                        </Border>
+                                        <Border VerticalAlignment="Bottom"
+												Background="#BF000000">
+                                            <TextBlock Text="{Binding VideoName}"
+													   FontSize="25"
+													   TextWrapping="Wrap"
+													   Margin="5"
+													   Foreground="#FFFFC700"
+													   FontFamily="\Resources\Oswald-Bold.ttf#Oswald"/>
+                                        </Border>
+                                    </Grid>
+                                </Button>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <Rectangle Height="20"
+							   Margin="0,-20,0,0"
+							   Fill="#363636"
+							   VerticalAlignment="Top">
+                        <Rectangle.OpacityMask>
+                            <ImageBrush Stretch="Fill" ImageSource="/Images/Gradiant.png"/>
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </Grid>
+            </phone:PanoramaItem>
+
+            <phone:PanoramaItem>
+                <phone:PanoramaItem.Header>
+                    <TextBlock Text="EXTRAS"
+							   FontSize="50"
+							   Foreground="White"
+							   FontFamily="\Resources\Oswald-Light.ttf#Oswald"/>
+                </phone:PanoramaItem.Header>
+                <StackPanel Margin="13,0,27,0">
+                    <Button Style="{StaticResource Btn_NoBorder}"
+							Click="Cotw_Click">
+                        <StackPanel Orientation="Horizontal"
+								Margin="0,0,0,20">
+                            <Border Height="70"
+								Width="70"
+								BorderThickness="0"
+								Margin="0,0,20,0"
+								Background="#262626">
+                                <Image Source="/Images/Icons/COTW.png"/>
+                            </Border>
+                            <TextBlock Text="COMMENTS OF&#x0a;THE WEEK."
+											   FontSize="25"
+											   TextWrapping="Wrap"                
+											   Foreground="#FFFFC700"
+											   FontFamily="\Resources\Oswald-Bold.ttf#Oswald"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource Btn_NoBorder}"
+							Click="Bts_Click">
+                        <StackPanel Orientation="Horizontal"
+									Margin="0,0,0,20">
+                            <Border Height="70"
+									Width="70"
+									BorderThickness="0"
+									Margin="0,0,20,0"
+									Background="#262626">
+                                <Image Source="/Images/Icons/BTS.png"/>
+                            </Border>
+                            <TextBlock Text="BEHIND THE&#x0a;SCENES."
+									   FontSize="25"
+									   TextWrapping="Wrap"
+									   Foreground="#FFFFC700"
+									   FontFamily="\Resources\Oswald-Bold.ttf#Oswald"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource Btn_NoBorder}"
+							Click="Wir_Click">
+                        <StackPanel Orientation="Horizontal"
+									Margin="0,0,0,20">
+                            <Border Height="70"
+									Width="70"
+									BorderThickness="0"
+									Margin="0,0,20,0"
+									Background="#262626">
+                                <Image Source="/Images/Icons/WIR.png"/>
+                            </Border>
+                            <TextBlock Text="WEEK IN REVIEW."
+									   FontSize="25"    
+									   Foreground="#FFFFC700"
+									   FontFamily="\Resources\Oswald-Bold.ttf#Oswald"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource Btn_NoBorder}"
+							Click="Mtcac_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Border Height="70"
+									Width="70"
+									BorderThickness="0"
+									Margin="0,0,20,0"
+									Background="#262626">
+                                <Image Source="/Images/Icons/MTCAC.png"/>
+                            </Border>
+                            <TextBlock Text="MEET THE CAST&#x0a;&amp; CREW."
+									   FontSize="25"    
+									   Foreground="#FFFFC700"
+									   FontFamily="\Resources\Oswald-Bold.ttf#Oswald"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </phone:PanoramaItem>
+
+        </phone:Panorama>
+
+        <Grid x:Name="rec_cover"
+              Grid.Row="1"
+              Background="#E5000000"
+              Visibility="Collapsed">
+            <TextBlock Margin="20"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Text="LOADING VIDEO"
+                       FontSize="40"    
+                       Foreground="#FFFFC700"
+                       FontFamily="\Resources\Oswald-Bold.ttf#Oswald"/>
+        </Grid>
+    </Grid>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar BackgroundColor="#262626"
+							  ForegroundColor="White">
+            <shell:ApplicationBar.Buttons>
+                <shell:ApplicationBarIconButton Text="random"
+												IconUri="/Images/Icons/Random.png"
+												Click="Random_Click"/>
+                <shell:ApplicationBarIconButton Text="search"
+												IconUri="/Images/Icons/Search.png"
+												Click="Search_Click"/>
+            </shell:ApplicationBar.Buttons>
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="about"
+											  Click="About_Click"/>
+                <shell:ApplicationBarMenuItem Text="settings"
+											  Click="Settings_Click"/>
+            </shell:ApplicationBar.MenuItems>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+</phone:PhoneApplicationPage>
